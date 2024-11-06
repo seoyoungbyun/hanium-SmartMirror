@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>옷장 페이지</title>
+    <style>
+        html {
+            background-color: black;
+        }
+
+        #left-div {
+            width: 230px;
+            height: 100vh;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-left: 25px;
+            position: fixed;
+            top: 0;
+        }
+
+        #main-content {
+            display: flex;
+            margin-left: 260px;
+            margin-top: 25px;
+        }
+
+        #clothes-container,
+        #cody-container {
+            margin-right: 20px;
+        }
+
+        #clothes-list,
+        #cody-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #clothes-list img,
+        #cody-list img {
+            width: 100px;
+            height: auto;
+            margin: 10px;
+        }
+
+        #cody-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+        }
+
+        .cody-container {
+            text-align: center;
+            width: 180px;
+        }
+
+        button {
+            width: 50%;
+            max-width: 200px;
+            padding: 20px;
+            margin: 10px 0;
+            border: solid;
+            border-width: 1px;
+            border-color: white;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        p {
+            color: white;
+        }
+
+        li {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="display: flex;">
+        <div id="left-div">
+            <div id="inner-box">
+                <button id="backButton">뒤로 가기</button>
+                <!-- 코디 삭제 폼 -->
+                <form id="deleteCodyForm">
+                    <label for="codyId">삭제할 코디 ID:</label>
+                    <input type="text" id="codyId" name="codyId" required>
+                    <button type="submit">코디 삭제</button>
+                </form>
+                <form id="deleteClothesForm">
+                    <label for="clothesId">삭제할 옷 ID:</label>
+                    <input type="text" id="clothesId" name="clothesId" required>
+                    <button type="submit">옷 삭제</button>
+                </form>
+            </div>
+            <p id="deleteStatus"></p>
+        </div>
+
+        <div id="main-content">
+            <!-- 옷 목록 컨테이너 -->
+            <div id="clothes-container">
+                <p>옷 목록</p>
+                <ul id="clothes-list"></ul>
+            </div>
+
+            <!-- 코디 목록 컨테이너 -->
+            <div id="cody-container">
+                <p>코디 목록</p>
+                <ul id="cody-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("backButton").onclick = function () {
+            window.history.back();
+        };
+
+        // 코디 목록을 불러오는 함수
+        function fetchCodyList() {
+            fetch('/cody')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('네트워크 응답이 좋지 않습니다.');
+                    }
+                    return response.json();
+                })
+                .then(cody => {
+                    const codyList = document.getElementById('cody-list');
+                    codyList.innerHTML = ''; // 이전 목록 비우기
+                    cody.forEach(cody => {
+                        const container = document.createElement('div');
+                        container.classList.add('cody-container');
+
+                        const top_img = document.createElement('img');
+                        const bottom_img = document.createElement('img');
+
+                        // top_img가 있는지 확인
+                        if (cody.top_img) {
+                            top_img.src = `data:image/png;base64,${cody.top_img}`;  // base64 인코딩된 이미지 데이터 사용
+                        } else {
+                            top_img.alt = '이미지 없음';  // 이미지가 없을 경우 대체 텍스트
+                        }
+
+                        // bottom_img가 있는지 확인
+                        if (cody.bottom_img) {
+                            bottom_img.src = `data:image/png;base64,${cody.bottom_img}`;  // base64 인코딩된 이미지 데이터 사용
+                        } else {
+                            bottom_img.alt = '이미지 없음';  // 이미지가 없을 경우 대체 텍스트
+                        }
+
+                        // 이미지 크기 설정
+                        top_img.width = 120;
+                        bottom_img.width = 120;
+
+                        // cody_id를 텍스트로 추가
+                        const codyText = document.createElement('p');
+                        codyText.textContent = `${cody.cody_id}`;
+
+                        // 이미지와 텍스트를 container div에 추가
+                        container.appendChild(codyText);
+                        container.appendChild(top_img);
+                        container.appendChild(bottom_img);
+
+                        // 컨테이너 div를 codyList에 추가
+                        codyList.appendChild(container);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching cody:', error); // 에러 처리
+                    const codyList = document.getElementById('cody-list');
+                    codyList.textContent = '데이터를 불러오는 데 오류가 발생했습니다.';
+                });
+        }
+
+        // 옷 목록 불러오기
+        function fecthClothesList() {
+            fetch('/data')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('네트워크 응답이 좋지 않습니다.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const clothesList = document.getElementById('clothes-list');
+                    clothesList.innerHTML = ''; // 이전 목록 비우기
+                    data.forEach(clothes => {
+                        const li = document.createElement('li');
+                        const img = document.createElement('img');
+
+                        if (clothes.image) {
+                            img.src = `data:image/png;base64,${clothes.image}`;  // base64 인코딩된 이미지 데이터 사용
+                        } else {
+                            img.alt = '이미지 없음';  // 이미지가 없을 경우 대체 텍스트
+                        }
+
+                        img.alt = clothes.type;
+
+                        li.textContent = `${clothes.clothes_id} : ${clothes.color} : ${clothes.season} : ${clothes.mood}`;
+                        li.appendChild(img);  // 이미지 추가
+                        clothesList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error); // 에러 처리
+                    const clothesList = document.getElementById('clothes-list');
+                    clothesList.textContent = '데이터를 불러오는 데 오류가 발생했습니다.';
+                });
+        }
+
+        // 옷 삭제 기능
+        document.getElementById('deleteClothesForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const clothesId = document.getElementById('clothesId').value;
+
+            fetch(`/delete_clothes/${clothesId}`, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    console.log('응답 상태:', response.status);
+                    return response.json();
+                })
+                .then(result => {
+                    console.log('JSON 응답:', result);
+                    document.getElementById('deleteStatus').textContent = result.message;
+
+                    // 삭제 후 옷 목록을 다시 불러오기
+                    fecthClothesList();
+                    // 삭제 후 코디 목록을 다시 불러오기
+                    fetchCodyList();
+                })
+                .catch(error => {
+                    console.error('Error deleting clothes:', error);
+                    document.getElementById('deleteStatus').textContent = '삭제 중 오류가 발생했습니다.';
+                });
+        });
+
+        // 코디 삭제 기능
+        document.getElementById('deleteCodyForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const codyId = document.getElementById('codyId').value;
+
+            fetch(`/delete_cody/${codyId}`, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    console.log('응답 상태:', response.status); // 응답 상태 로그
+                    return response.json();
+                })
+                .then(result => {
+                    console.log('JSON 응답:', result); // JSON 응답 로그
+                    document.getElementById('deleteStatus').textContent = result.message;
+
+                    // 삭제 후 코디 목록을 다시 불러오기
+                    fetchCodyList();
+                })
+                .catch(error => {
+                    console.error('Error deleting cody:', error);
+                    document.getElementById('deleteStatus').textContent = '삭제 중 오류가 발생했습니다.';
+                });
+        });
+
+        // 페이지 로드 시 데이터 불러오기
+        fecthClothesList();
+        fetchCodyList();
+    </script>
+</body>
+
+</html>
