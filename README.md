@@ -13,7 +13,7 @@
 - ACK 2024 논문 게재
 - 동덕여자대학교 소프트웨어 경진대회
 
-### ♻️동작 화면
+### 🔎동작 화면
 <div>
   <h5>스마트 미러 메인 화면</h5>
   <img width="526" alt="main" src="https://github.com/user-attachments/assets/ab4d25c8-817b-4208-917c-9c53681455cb">
