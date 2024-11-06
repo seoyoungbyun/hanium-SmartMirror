@@ -1,0 +1,13 @@
+#randomClothesButton {
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* 초록색 버튼 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    cursor: pointer;
+}
