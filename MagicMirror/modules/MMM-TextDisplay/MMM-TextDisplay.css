@@ -1,0 +1,14 @@
+.MMM-TextDisplay {
+    font-size: 50px; /* 텍스트 크기 */
+    /* background-color: white; */
+    color: hotpink; /* 텍스트 색상 */
+    text-align: left; /* 텍스트 정렬 */
+    line-height: 1.5; /* 줄 간격 */
+    padding: 10px; /* 내부 여백 */
+}
+
+.MMM-TextDisplay .wrapper {
+    border: 2px solid white; 
+    border-radius: 5px; 
+    background-color: white; 
+}
