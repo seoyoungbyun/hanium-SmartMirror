@@ -1,0 +1,33 @@
+/* MMM-BothPython.css */
+.confirm-button {
+    /*display: block; /* 버튼을 블록 요소로 설정하여 입력창 아래로 이동시킵니다 */
+    /*margin-top: 10px; /* 입력창과 버튼 사이에 간격을 추가합니다 */
+    margin-left: 10px;
+    padding: 30px 60px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.confirm-button:hover {
+    background-color: white;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}                                                                                
+
+/* 입력 필드 스타일 추가 */
+#userInput {
+    width: 300px; /* 입력창의 너비를 300px로 설정 */
+    height: 80px; /* 입력창의 높이를 40px로 설정 */
+    font-size: 50px; /* 폰트 크기 조정 */
+    padding: 5px; /* 패딩 추가 */
+    border-radius: 5px; /* 경계선 둥글게 */
+    border: 1px solid #ccc; /* 경계선 색상 및 두께 */
+}
