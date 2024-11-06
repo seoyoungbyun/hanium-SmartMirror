@@ -1,0 +1,23 @@
+.closet-button-wrapper {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: auto;
+}
+
+.closet-button {
+    padding: 20px;
+    width: 200px;
+    height: 100px;
+    margin: 5px 0;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.closet-button:hover {
+    background-color: #ffffff;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>옷장 페이지</title>
+        <style>
+            html {
+                background-color: black;
+            }
+            #left-div {
+                width: 230px;
+                height: auto;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-top: 25px;
+                margin-right: 70px;
+                margin-left: 25px;
+            }
+            #right-div {
+                width: 1200px;
+                height: auto;
+                margin-right: 30px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+            }
+            button {
+                width: 100%;
+                max-width: 120px; /* 버튼 최대 너비 설정 */
+                padding: 10px; /* 버튼의 내부 여백 설정 */
+                margin: 5px 0; /* 버튼 사이의 간격 설정 */
+                border:solid; /* 버튼의 기본 테두리 제거 */
+                border-width: 1px;
+                border-color: white;
+                border-radius: 5px; /* 버튼 모서리 둥글게 설정 */
+                background-color: black; /* 버튼 배경색 설정 */
+                color: white; /* 버튼 텍스트 색상 설정 */
+                font-size: 14px; /* 버튼 텍스트 크기 설정 */
+                cursor: pointer; /* 버튼에 커서 스타일 설정 */
+            }
+            p {
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" style="display: flex;">
+            <div id="left-div">
+                <button onclick="alert('클릭')">옷 등록하기</button>
+                <button onclick="alert('옷 살펴보기')">옷 살펴보기</button>
+            </div>
+            <div>
+                <div id="rigt-box" align="center">
+                    <p>옷 목록 표시 출력</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
